@@ -40,7 +40,7 @@ const NodeConnections = () => {
       <nav className={styles.navbar}>
         <div className={styles.navLogo} onClick={() => navigate('/')}>
           <div className={styles.navLogoIcon}>⚡</div>
-          <span className={styles.navLogoText}>CodeMesh</span>
+          <span className={styles.navLogoText}>ProctorX</span>
         </div>
         <div className={styles.navActions}>
           <button className="btn btn-ghost btn-sm" onClick={() => navigate('/')}>

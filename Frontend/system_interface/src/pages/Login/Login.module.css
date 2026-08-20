@@ -1,26 +1,4 @@
-.blob1, .blob2 {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-}
-.blob1 {
-  width: 500px; height: 500px;
-  background: rgba(99,102,241,0.18);
-  top: -150px; left: -150px;
-  animation: floatBlob 10s ease-in-out infinite;
-}
-.blob2 {
-  width: 400px; height: 400px;
-  background: rgba(139,92,246,0.15);
-  bottom: -100px; right: -100px;
-  animation: floatBlob 12s ease-in-out infinite reverse;
-}
-@keyframes floatBlob {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-30px); }
-}
+/* Aurora ambient background handled by .aurora-bg + .grain in index.css */
 
 .form {
   display: flex;
@@ -35,23 +13,40 @@
 
 .showHideBtn {
   position: absolute;
-  right: 12px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: var(--clr-text-3);
-  font-size: 16px;
-  padding: 0;
-  display: flex; align-items: center; justify-content: center;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  transition: var(--tr-fast);
+}
+.showHideBtn:hover {
+  color: var(--clr-text);
+  background: var(--clr-surface);
 }
 
 .submitBtn {
   margin-top: 8px;
   width: 100%;
   justify-content: center;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.backBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
