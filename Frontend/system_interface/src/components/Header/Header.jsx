@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../common/Icon';
 import styles from './Header.module.css';
 
 const Header = ({ title, subtitle, onMenuToggle, actions }) => (
@@ -8,7 +9,7 @@ const Header = ({ title, subtitle, onMenuToggle, actions }) => (
       onClick={onMenuToggle}
       aria-label="Toggle sidebar"
     >
-      ☰
+      <Icon name="menu" size={16} />
     </button>
 
     <div className={styles.titles}>

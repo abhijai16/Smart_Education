@@ -2,26 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getTestById, getAllTests } from '../../services/testService';
+import Icon from '../common/Icon';
 import styles from './Sidebar.module.css';
 
 const TEACHER_NAV = [
-  { to: '/teacher', icon: 'DB', label: 'Dashboard', exact: true },
-  { to: '/teacher/tests', icon: 'TS', label: 'Tests' },
-  { to: '/teacher/create-test', icon: 'CT', label: 'Create Test' },
-  { to: '/teacher/results', icon: 'RS', label: 'Student Results' },
-  { to: '/teacher/flagged', icon: 'FG', label: 'Flagged Submissions' },
-  { to: '/teacher/analytics', icon: 'AN', label: 'Analytics' },
-  { to: '/teacher/nodes', icon: 'ND', label: 'Node Connections' },
-  { to: '/teacher/add-user', icon: 'US', label: 'Add User' },
-  { to: '/teacher/code-review', icon: 'CR', label: 'Code Review' },
+  { to: '/teacher',          icon: 'dashboard',    label: 'Dashboard',           exact: true },
+  { to: '/teacher/tests',    icon: 'assignments',  label: 'Tests' },
+  { to: '/teacher/create-test', icon: 'submissions', label: 'Create Test' },
+  { to: '/teacher/results',  icon: 'analytics',    label: 'Student Results' },
+  { to: '/teacher/flagged',  icon: 'eye',          label: 'Flagged Submissions' },
+  { to: '/teacher/analytics', icon: 'analytics',   label: 'Analytics' },
+  { to: '/teacher/nodes',    icon: 'server',       label: 'Node Connections' },
+  { to: '/teacher/add-user', icon: 'assignments',  label: 'Add User' },
+  { to: '/teacher/code-review', icon: 'submissions', label: 'Code Review' },
 ];
 
 const STUDENT_NAV = [
-  { to: '/student', icon: 'DB', label: 'Dashboard', exact: true },
-  { to: '/student/tests', icon: 'TS', label: 'Test Questions' },
-  { to: '/student/tasks', icon: 'TS', label: 'Task Status' },
-  { to: '/student/results', icon: 'RS', label: 'My Results' },
-  { to: '/student/nodes', icon: 'ND', label: 'Node Connections' },
+  { to: '/student',         icon: 'dashboard',   label: 'Dashboard',        exact: true },
+  { to: '/student/tests',   icon: 'assignments', label: 'Test Questions' },
+  { to: '/student/tasks',   icon: 'submissions', label: 'Task Status' },
+  { to: '/student/results', icon: 'analytics',   label: 'My Results' },
+  { to: '/student/nodes',   icon: 'server',      label: 'Node Connections' },
 ];
 
 const Sidebar = ({ role, isOpen, onClose }) => {
@@ -51,22 +52,16 @@ const Sidebar = ({ role, isOpen, onClose }) => {
     }
   }, [role, examActive]);
 
-  const getInitials = (name = '') =>
-    name.slice(0, 2).toUpperCase() || '??';
-
   const handleLogout = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (examActive) {
       if (!window.confirm("A test is currently active. Logging out will auto-submit your test and current code. Do you wish to proceed?")) {
         return;
       }
-      
-      // Tell CodingInterface to submit the current code
+
       window.dispatchEvent(new Event('exam-force-submit'));
-      
-      // Wait a moment for code submission to queue
       await new Promise(r => setTimeout(r, 1000));
-      
+
       try {
         const testId = localStorage.getItem('exam_test_id');
         if (testId) {
@@ -98,16 +93,16 @@ const Sidebar = ({ role, isOpen, onClose }) => {
 
       <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
         <div className={styles.brand}>
-          <div className={styles.brandIcon}>AE</div>
+          <div className={styles.brandIcon}><Icon name="bolt" size={14} /></div>
           <div>
-            <div className={styles.brandName}>CodeMesh</div>
+            <div className={styles.brandName}>ProctorX</div>
             <div className={styles.brandSub}>Eval Platform</div>
           </div>
         </div>
 
         <nav className={styles.nav}>
           <div className={styles.navSection}>
-            {role === 'teacher' ? 'Teacher Menu' : 'Student Menu'}
+            {role === 'teacher' ? 'Teacher' : 'Student'}
           </div>
 
           {navItems.map((item) => (
@@ -122,36 +117,37 @@ const Sidebar = ({ role, isOpen, onClose }) => {
                 if (window.innerWidth < 900) onClose?.();
               }}
             >
-              <span className={styles.navIcon}>{item.icon}</span>
+              <span className={styles.navIcon}><Icon name={item.icon} size={15} /></span>
               <span>{item.label}</span>
             </NavLink>
           ))}
 
           {role === 'student' && examActive && (
-            <div style={{ marginTop: '24px' }}>
-              <div className={styles.navSection} style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ef4444', animation: `${styles.pulseLive} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite` }} />
+            <div style={{ marginTop: '20px' }}>
+              <div className={styles.navSection} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span className={styles.liveDot} />
                 Live Test
               </div>
-              <button 
-                className="btn btn-secondary btn-sm" 
-                style={{ width: 'calc(100% - 24px)', margin: '0 auto 16px auto', display: 'block', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+              <button
+                className="btn btn-secondary btn-sm"
+                style={{ width: 'calc(100% - 16px)', margin: '0 8px 12px', display: 'inline-flex', justifyContent: 'center', gap: 6 }}
                 onClick={() => {
                   navigate('/student/tests');
                   if (window.innerWidth < 900) onClose?.();
                 }}
               >
                 Go to Test
+                <Icon name="arrowRight" size={12} />
               </button>
               {activeTest?.questions && activeTest.questions.length > 0 && (
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', padding: '0 12px' }}>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', padding: '0 8px' }}>
                   {activeTest.questions.map((q, idx) => (
                     <NavLink
                       key={q.id}
                       to={`/student/tests/question/${q.id}`}
-                      className={({ isActive }) => 
-                        isActive 
-                          ? `${styles.questionBubble} ${styles.questionBubbleActive}` 
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.questionBubble} ${styles.questionBubbleActive}`
                           : styles.questionBubble
                       }
                       onClick={() => {
@@ -169,13 +165,16 @@ const Sidebar = ({ role, isOpen, onClose }) => {
 
         <div className={styles.footer}>
           <div className={styles.userCard}>
-            <div className={styles.userAvatar}>{getInitials(user?.username)}</div>
-            <div>
+            <div className={styles.userAvatar}>
+              {(user?.username || 'U').slice(0, 2).toUpperCase()}
+            </div>
+            <div style={{ minWidth: 0 }}>
               <div className={styles.userName}>{user?.username || 'User'}</div>
               <div className={styles.userRole}>{user?.role || 'unknown'}</div>
             </div>
           </div>
           <button className={`btn btn-ghost ${styles.logoutBtn}`} onClick={handleLogout}>
+            <Icon name="signIn" size={13} />
             Logout
           </button>
         </div>

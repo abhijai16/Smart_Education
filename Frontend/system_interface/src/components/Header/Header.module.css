@@ -2,26 +2,25 @@
   position: sticky;
   top: 0;
   height: var(--topbar-h);
-  background: rgba(15,22,41,0.92);
+  background: rgba(8,9,10,0.78);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--clr-border);
   display: flex;
   align-items: center;
   padding: 0 24px;
-  gap: 16px;
+  gap: 14px;
   z-index: 50;
 }
 
 .menuBtn {
   display: none;
-  width: 36px; height: 36px;
-  background: none;
-  border: none;
+  width: 32px; height: 32px;
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
   cursor: pointer;
-  font-size: 20px;
   color: var(--clr-text-2);
-  border-radius: var(--r-sm);
   transition: var(--tr-fast);
   flex-shrink: 0;
   align-items: center;
@@ -30,6 +29,7 @@
 
 .menuBtn:hover {
   background: var(--clr-surface);
+  border-color: var(--clr-border-strong);
   color: var(--clr-text);
 }
 
@@ -39,19 +39,20 @@
 }
 
 .title {
-  font-size: 19px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   color: var(--clr-text);
   margin: 0;
   line-height: 1.2;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .subtitle {
-  font-size: 13px;
-  color: var(--clr-text-2);
+  font-size: 12px;
+  color: var(--clr-text-3);
   margin: 2px 0 0;
 }
 
@@ -64,7 +65,7 @@
 
 @media (max-width: 900px) {
   .menuBtn {
-    display: flex;
+    display: inline-flex;
   }
   .header {
     padding: 0 16px;

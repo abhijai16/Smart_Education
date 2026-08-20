@@ -46,7 +46,7 @@ export default function RegisterPage() {
       <div className="auth-card" style={{maxWidth:520}}>
         <div className="auth-logo-ring">⚡</div>
         <h1 className="auth-title">Create Account</h1>
-        <p className="auth-sub">Join CodeMesh — Decentralized Code Evaluation</p>
+        <p className="auth-sub">Join ProctorX — Secure Code Evaluation</p>
 
         {error && <div className="alert alert-error">{error}</div>}
 
