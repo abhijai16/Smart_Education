@@ -1,58 +1,44 @@
 # Assignment System
 
-## Using Docker for this Project
+1. Install PostgreSQL
 
-This guide provides steps on how to import and run the Docker container for the Assignment System.
+2. Clone the repo from GitHub
+    -> git clone https://github.com/abhijai16/Smart_Education
 
-### Prerequisites
-- Ensure you have [Docker](https://docs.docker.com/get-docker/) installed and running on your system.
+3. Create a database called assignment_system in PostgreSQL
+    -> CREATE DATABASE assignment_system;
+    -> \q   //to exit.
 
-### 1. Import the Container Image
-If you have the Docker image saved as a `.tar` file, you can import (load) it into your local Docker environment.
+4. Create a .env file with the database credentials (name, user, password, host, port)
+    ->  SECRET_KEY=your-random-secret-key-here
+        DJANGO_DEBUG=True
 
-Open your terminal or command prompt and run:
-```bash
-docker load -i assignment_system_image.tar
-```
-*(Note: Replace `assignment_system_image.tar` with the actual name of your tar file if it differs.)*
+        DB_NAME=assignment_system
+        DB_USER=youruser
+        DB_PASSWORD=yourpassword
+        DB_HOST=localhost
+        DB_PORT=5432
 
-To verify that the image has been successfully imported, you can list your Docker images:
-```bash
-docker images
-```
-You should see the imported image in the list.
+        EMAIL_HOST=smtp.gmail.com
+        EMAIL_PORT=587
+        EMAIL_USE_TLS=True
+        EMAIL_USE_SSL=False
+        EMAIL_HOST_USER=
+        EMAIL_HOST_PASSWORD=
 
-### 2. Run the Container
-Once the image is loaded, you can run the container using the `docker run` command.
+5. Create a Python virtual environment, activate it, and run pip install for all dependencies (Django, the Postgres driver, Google Gemini for the plagiarism checker, etc.)
 
-```bash
-docker run -d -p 8080:8080 --name assignment_system_container <image_name>
-```
-- `-d`: Runs the container in detached mode (in the background).
-- `-p 8080:8080`: Maps port 8080 on your host machine to port 8080 inside the container. Adjust these ports if your application uses a different port.
-- `--name`: Assigns a custom name (`assignment_system_container`) to your running container.
-- `<image_name>`: Replace this with the actual name/tag of the image you imported (e.g., `assignment_system:latest`).
+6. Run the database migrations to build out all the tables
 
-### 3. Verify the Container is Running
-To check the status of your running container:
-```bash
-docker ps
-```
-You should see `assignment_system_container` in the list of running containers. 
+7. Run npm install for the frontend (React, Redux, Monaco Editor)
 
-### 4. Stopping and Starting the Container
-To stop the running container:
-```bash
-docker stop assignment_system_container
-```
+8. Start the central database server (python cli.py --db_server)
 
-To start the container again:
-```bash
-docker start assignment_system_container
-```
+9. Start the worker node + frontend on a separate port to avoid conflicts (python cli.py --assignment --port 8001)
 
-### 5. Viewing Logs (Optional)
-If you need to troubleshoot or view the application's output, you can check the container logs:
-```bash
-docker logs assignment_system_container
-```
+10. Create a superuser account through Django (python manage.py createsuperuser) — this automatically becomes a "teacher" account in the system
+
+11. Log in using the Django username (not email) and the password set during superuser creation
+
+
+Stack: PostgreSQL + Django backend + React front-end
