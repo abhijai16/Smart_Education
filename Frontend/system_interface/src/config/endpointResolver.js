@@ -1,6 +1,6 @@
 import runtimeConfig from './runtimeConfig';
 
-const central = () => runtimeConfig.getCentralURL();
+export const central = () => runtimeConfig.getCentralURL();
 
 /**
  * Central endpoint resolver.
