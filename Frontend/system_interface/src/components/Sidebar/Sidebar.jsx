@@ -95,7 +95,7 @@ const Sidebar = ({ role, isOpen, onClose }) => {
         <div className={styles.brand}>
           <div className={styles.brandIcon}><Icon name="bolt" size={14} /></div>
           <div>
-            <div className={styles.brandName}>ProctorX</div>
+            <div className={styles.brandName}>Quorum</div>
             <div className={styles.brandSub}>Eval Platform</div>
           </div>
         </div>

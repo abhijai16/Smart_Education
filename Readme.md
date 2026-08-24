@@ -1,4 +1,4 @@
-# Smart Education — ProctorX Assignment System
+# Quorum — Smart Education Assignment System
 
 A proctored coding-exam platform for college CS labs. Three pieces run side-by-side:
 

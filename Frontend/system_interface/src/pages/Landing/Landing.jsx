@@ -24,7 +24,7 @@ const Landing = () => {
       <nav className={styles.navbar}>
         <div className={styles.navLogo}>
           <div className={styles.navLogoIcon}><Icon name="bolt" size={14} /></div>
-          <span className={styles.navLogoText}>ProctorX</span>
+          <span className={styles.navLogoText}>Quorum</span>
         </div>
         <div className={styles.navActions}>
           <button className="btn btn-ghost btn-sm" onClick={() => navigate('/nodes')}>
@@ -146,7 +146,7 @@ const Landing = () => {
 
       {/* ── Footer ───────────────────────────────────────────── */}
       <footer className={styles.footer}>
-        &copy; personal project 2026 ProctorX
+        &copy; personal project 2026 Quorum
       </footer>
     </div>
   );

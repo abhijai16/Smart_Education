@@ -73,8 +73,8 @@ export default function Sidebar() {
       <div className="sidebar-brand">
         <div className="sidebar-brand-logo">⚡</div>
         <div>
-          <div className="sidebar-brand-name">CodeLab</div>
-          <div className="sidebar-brand-sub">ProctorX</div>
+          <div className="sidebar-brand-name">Quorum</div>
+          <div className="sidebar-brand-sub">Quorum</div>
         </div>
       </div>
 

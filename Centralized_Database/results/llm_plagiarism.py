@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-import google.generativeai as genai
+from google import genai
 from django.conf import settings
 from results.models import SubmittedSolution, PlagiarismDetected
 from questions.models import LockdownSchedule
@@ -30,9 +30,10 @@ def run_llm_plagiarism_check(schedule_id):
             trigger_email_daemon(schedule_id)
             return
 
-        genai.configure(api_key=api_key)
-        # We use a fast, smart model
-        model = genai.GenerativeModel('gemini-1.5-pro')
+        # New SDK uses a Client object; models are accessed via client.models.*
+        client = genai.Client(api_key=api_key)
+        # We use a fast, smart model (gemini-1.5-pro is end-of-life as of 2025)
+        model_name = 'gemini-2.0-flash'
 
         # 1. Fetch all submissions that need checking
         pending_submissions = SubmittedSolution.objects.filter(plagiarism_checked=False)
@@ -94,7 +95,10 @@ If no plagiarism is found, output: []
 """
             # 5. Call LLM
             try:
-                response = model.generate_content(prompt)
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                )
                 response_text = response.text.strip()
                 if response_text.startswith("```json"):
                     response_text = response_text[7:-3].strip()
