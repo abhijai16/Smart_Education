@@ -35,12 +35,12 @@ function DiscoveryLoadingScreen({ message }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 32,
           boxShadow: '0 0 30px rgba(99,102,241,0.4)',
           animation: 'pulse-glow 2s ease-in-out infinite',
+          overflow: 'hidden',
         }}
       >
-        ⚡
+        <img src="/logo192.png" alt="Quorum logo" style={{ width: 56, height: 56, objectFit: 'contain' }} />
       </div>
 
       <div style={{ textAlign: 'center' }}>

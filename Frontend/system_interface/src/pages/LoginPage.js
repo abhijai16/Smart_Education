@@ -34,7 +34,9 @@ export default function LoginPage() {
       <div className="auth-bg-blur" style={{ width:400, height:400, background:'#8b5cf6', bottom:-150, right:-150 }} />
 
       <div className="auth-card">
-        <div className="auth-logo-ring">💻</div>
+        <div className="auth-logo-ring">
+          <img src="/logo192.png" alt="Quorum logo" style={{ width: 56, height: 56, objectFit: 'contain' }} />
+        </div>
         <h1 className="auth-title">Welcome back</h1>
         <p className="auth-sub">Sign in to Quorum</p>
 

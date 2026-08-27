@@ -23,7 +23,9 @@ const Landing = () => {
       {/* ── Navbar ─────────────────────────────────────────────── */}
       <nav className={styles.navbar}>
         <div className={styles.navLogo}>
-          <div className={styles.navLogoIcon}><Icon name="bolt" size={14} /></div>
+          <div className={styles.navLogoIcon}>
+            <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          </div>
           <span className={styles.navLogoText}>Quorum</span>
         </div>
         <div className={styles.navActions}>

@@ -44,7 +44,9 @@ export default function RegisterPage() {
       <div className="auth-bg-blur" style={{width:400,height:400,background:'#8b5cf6',bottom:-100,right:-100}} />
 
       <div className="auth-card" style={{maxWidth:520}}>
-        <div className="auth-logo-ring">⚡</div>
+        <div className="auth-logo-ring">
+          <img src="/logo192.png" alt="Quorum logo" style={{ width: 56, height: 56, objectFit: 'contain' }} />
+        </div>
         <h1 className="auth-title">Create Account</h1>
         <p className="auth-sub">Join Quorum — Secure Code Evaluation</p>
 

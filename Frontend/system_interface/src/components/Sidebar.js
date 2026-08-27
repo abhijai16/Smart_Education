@@ -71,7 +71,9 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* Brand */}
       <div className="sidebar-brand">
-        <div className="sidebar-brand-logo">⚡</div>
+        <div className="sidebar-brand-logo">
+          <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        </div>
         <div>
           <div className="sidebar-brand-name">Quorum</div>
           <div className="sidebar-brand-sub">Quorum</div>
