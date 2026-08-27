@@ -12,6 +12,7 @@ class PushResultSerializer(serializers.Serializer):
     total_testcases = serializers.IntegerField(default=0)
     execution_time = serializers.FloatField(default=0)
     email = serializers.CharField(required=False, allow_blank=True)
+    ai_report = serializers.CharField(required=False, allow_blank=True, default='')
     # ----------------------------------------------------------
 
     # (You can keep these if you use them elsewhere, otherwise they are optional)
@@ -41,6 +42,7 @@ class ResultSerializer(serializers.ModelSerializer):
             'status',
             'submitted_at',
             'is_latest',
+            'ai_report',
         ]
 
 

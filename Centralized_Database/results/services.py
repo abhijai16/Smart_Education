@@ -20,6 +20,7 @@ def store_result(student, data):
         execution_time=data.get('execution_time', 0),
         emailed=False,
         is_latest=True,
+        ai_report=data.get('ai_report', ''),
     )
     return result
 

@@ -18,6 +18,8 @@ import time
 import traceback
 import urllib.request
 import urllib.error
+import re
+import requests
 
 from api_management.services.sandbox import (
     DEFAULT_TIME_LIMIT_MS,
@@ -54,10 +56,101 @@ def _priority(status: str) -> int:
     }.get(status, 99)
 
 
+def _llm_judge_submission(language: str, code: str, test_cases: list) -> dict:
+    """
+    Ask Gemini to judge the code against test_cases instead of actually
+    executing it. Returns {'results': [...], 'report': str} aligned
+    index-for-index with the input test_cases list.
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return {
+            'results': [{'passed': False, 'actual_output': '', 'status': 'runtime_error'} for _ in test_cases],
+            'report': 'GEMINI_API_KEY not configured on this machine — could not run AI judge.'
+        }
+
+    cases_payload = [
+        {'input': str(c.get('input_data', '')), 'expected_output': str(c.get('expected_output', ''))}
+        for c in test_cases
+    ]
+
+    prompt = f"""You are acting as a strict automated code judge and reviewer.
+You will be given source code in {language} and a list of test cases (stdin input + expected stdout output).
+For each test case, mentally simulate running the code with that input and determine:
+- what the program would print to stdout
+- whether that output exactly matches the expected output
+- a status: one of "accepted", "wrong_answer", "runtime_error", "compilation_error", "time_limit_exceeded"
+
+Then write an overall report (4-8 sentences) reviewing the code for a teacher: correctness, edge case handling, time/space complexity, code quality/readability, and any bugs you noticed.
+
+Code ({language}):
+-----
+{code}
+-----
+
+Test cases (JSON array, same order must be preserved in your response):
+{json.dumps(cases_payload)}
+
+Return ONLY valid JSON in this exact format:
+{{
+  "results": [
+    {{"actual_output": "...", "passed": true, "status": "accepted"}}
+  ],
+  "report": "..."
+}}
+The "results" array MUST have exactly {len(cases_payload)} items, in the same order as the input test cases."""
+
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"responseMimeType": "application/json"}
+    }
+
+    models_to_try = ["gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"]
+    response = None
+    last_error = ""
+
+    for model in models_to_try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        try:
+            resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=115)
+            if resp.ok:
+                response = resp
+                break
+            last_error = f"{resp.status_code} - {resp.text[:300]}"
+        except Exception as e:
+            last_error = str(e)
+
+    if not response:
+        return {
+            'results': [{'passed': False, 'actual_output': '', 'status': 'runtime_error'} for _ in test_cases],
+            'report': f'AI judge failed to respond: {last_error}'
+        }
+
+    try:
+        result_data = response.json()
+        text_content = result_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+        cleaned = re.sub(r'^```(?:json)?\s*', '', text_content.strip())
+        cleaned = re.sub(r'\s*```$', '', cleaned).strip()
+        parsed = json.loads(cleaned)
+        results = parsed.get("results", [])
+        report = parsed.get("report", "")
+
+        while len(results) < len(test_cases):
+            results.append({'passed': False, 'actual_output': '', 'status': 'wrong_answer'})
+        results = results[:len(test_cases)]
+
+        return {'results': results, 'report': report}
+    except Exception as e:
+        return {
+            'results': [{'passed': False, 'actual_output': '', 'status': 'runtime_error'} for _ in test_cases],
+            'report': f'Could not parse AI judge response: {e}'
+        }
+
+
 def evaluate_task(task: dict) -> dict:
     """
-    Run code against all test cases and aggregate results.
-    Returns a payload suitable for POSTing to /result callback.
+    Judge code using the Gemini LLM instead of actually executing it, and
+    aggregate results into the same shape the rest of the system expects.
     """
     language = task.get('language', 'python')
     code = task.get('code', '')
@@ -70,9 +163,12 @@ def evaluate_task(task: dict) -> dict:
     for case in task.get("hidden_test_cases", []):
         case["is_hidden"] = True
         test_cases.append(case)
-    time_limit_ms = int(task.get('time_limit_ms') or DEFAULT_TIME_LIMIT_MS)
-    memory_limit_mb = int(task.get('memory_limit_mb') or DEFAULT_MEMORY_LIMIT_MB)
+
     max_score = float(task.get('max_score') or 100)
+
+    judged = _llm_judge_submission(language, code, test_cases)
+    llm_results = judged['results']
+    report = judged['report']
 
     results = []
     statuses = []
@@ -81,20 +177,12 @@ def evaluate_task(task: dict) -> dict:
     total_points = 0.0
 
     for i, case in enumerate(test_cases):
-        result = run_code(language, code, str(case.get('input_data', '')),
-                          time_limit_ms, memory_limit_mb)
-        expected = str(case.get('expected_output', '')).replace('\r\n', '\n').strip()
-        actual = result['stdout'].replace('\r\n', '\n').strip()
-        passed = (
-            result['status'] == 'success'
-            and actual == expected
-        )
-        points = float(case.get('points') or 0)
-        case_status = (
-            result['status'] if result['status'] != 'success'
-            else ('accepted' if passed else 'wrong_answer')
-        )
+        llm_case = llm_results[i] if i < len(llm_results) else {}
+        passed = bool(llm_case.get('passed', False))
+        case_status = llm_case.get('status', 'accepted' if passed else 'wrong_answer')
+        actual = str(llm_case.get('actual_output', ''))
 
+        points = float(case.get('points') or 0)
         if passed:
             passed_count += 1
             earned_points += points
@@ -107,11 +195,11 @@ def evaluate_task(task: dict) -> dict:
             'is_hidden': bool(case.get('is_hidden', False)),
             'passed': passed,
             'status': case_status,
-            'stdout': result['stdout'],
-            'stderr': result['stderr'],
+            'stdout': actual,
+            'stderr': '',
             'actual_output': actual,
-            'exec_time_ms': result['exec_time_ms'],
-            'memory_kb': round(result['memory_mb'] * 1024, 2),
+            'exec_time_ms': 0,
+            'memory_kb': 0,
         })
 
     if not statuses:
@@ -132,10 +220,6 @@ def evaluate_task(task: dict) -> dict:
         final_status = 'failed'
 
     score = round((earned_points / total_points * max_score) if total_points else 0, 2)
-    total_execution_time = sum(
-        tc['exec_time_ms']
-        for tc in results
-    )
 
     return {
         'task_id': task.get('task_id', ''),
@@ -147,9 +231,11 @@ def evaluate_task(task: dict) -> dict:
         'score': score,
         'passed_testcases': passed_count,
         'total_testcases': len(test_cases),
-        'execution_time': round(total_execution_time / 1000, 3),
+        'execution_time': 0,
         'email': task.get('email', ''),
+        'ai_report': report,
     }
+
 
 
 def send_result_callback(task: dict, result: dict) -> bool:

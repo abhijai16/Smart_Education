@@ -70,6 +70,7 @@ const GroupedResultTable = ({ groups, groupBy, showStudent, plagiarismMap = {} }
                             <th>Passed/Total</th>
                             <th>Exec Time</th>
                             <th>Submitted At</th>
+                            <th>AI Report</th>
                             {showStudent && <th>Plagiarism</th>}
                           </tr>
                         </thead>
@@ -91,6 +92,9 @@ const GroupedResultTable = ({ groups, groupBy, showStudent, plagiarismMap = {} }
                               <td style={{ fontSize: 13 }}>{r.passed_testcases ?? '?'}/{r.total_testcases ?? '?'}</td>
                               <td style={{ fontSize: 13 }}>{formatDuration(r.execution_time)}</td>
                               <td style={{ fontSize: 12, color: 'var(--clr-text-3)' }}>{formatDate(r.submitted_at)}</td>
+                              <td style={{ fontSize: 12, color: 'var(--clr-text-2)', maxWidth: 250 }} title={r.ai_report}>
+                                {r.ai_report ? (r.ai_report.length > 80 ? r.ai_report.slice(0, 80) + '…' : r.ai_report) : '—'}
+                              </td>
                               {showStudent && (
                                 <td>
                                   {(() => {
