@@ -39,15 +39,15 @@ const Login = () => {
 
   return (
     <div className="auth-root">
-      
+
       {/* --- ADDED BACK BUTTON --- */}
-      <button 
-        onClick={() => navigate('/')} 
+      <button
+        onClick={() => navigate('/')}
         className="btn btn-ghost"
-        style={{ 
-          position: 'absolute', 
-          top: '24px', 
-          left: '24px', 
+        style={{
+          position: 'absolute',
+          top: '24px',
+          left: '24px',
           zIndex: 10,
           color: 'var(--clr-text-2)', // Uses your existing text variables
           display: 'flex',
@@ -58,10 +58,6 @@ const Login = () => {
         ← Back
       </button>
       {/* ------------------------- */}
-
-      {/* Background blobs */}
-      <div className={styles.blob1} aria-hidden />
-      <div className={styles.blob2} aria-hidden />
 
       <div className="auth-card">
         {/* Logo */}
@@ -104,15 +100,16 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 disabled={loading}
-                style={{ paddingRight: 44 }}
+                style={{ paddingRight: 56 }}
               />
               <button
                 type="button"
                 className={styles.showHideBtn}
                 onClick={() => setShowPassword((s) => !s)}
                 tabIndex={-1}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
-                {showPassword ? '🙈' : '👁️'}
+                {showPassword ? 'HIDE' : 'SHOW'}
               </button>
             </div>
           </div>

@@ -27,15 +27,16 @@
 }
 
 .brandIcon {
-  width: 28px; height: 28px;
+  width: 36px; height: 36px;
   border-radius: var(--r-sm);
-  background: transparent;
-  border: 1px solid var(--clr-border-strong);
+  background: var(--grad-brand-soft);
+  border: 1px solid rgba(91,180,255,0.30);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  padding: 2px;
+  padding: 3px;
   box-sizing: border-box;
+  box-shadow: var(--shadow-brand);
 }
 
 .brandName {
@@ -44,6 +45,12 @@
   color: var(--clr-text);
   line-height: 1.2;
   letter-spacing: -0.01em;
+  display: block;
+  height: 24px !important;
+  width: auto !important;
+  max-width: 100px !important;
+  max-height: 24px !important;
+  object-fit: contain;
 }
 
 .brandSub {
@@ -90,9 +97,9 @@
 }
 
 .navItem.active {
-  background: var(--clr-surface-2);
-  color: var(--clr-text);
-  font-weight: 500;
+  background: var(--sidebar-active-bg, rgba(91,180,255,0.12));
+  color: var(--sidebar-active-text, #FFFFFF);
+  font-weight: 600;
 }
 .navItem.active::before {
   content: '';
@@ -103,6 +110,7 @@
   width: 2px;
   background: var(--clr-accent);
   border-radius: 2px;
+  box-shadow: 0 0 8px var(--clr-accent-glow);
 }
 
 .navIcon {
@@ -131,12 +139,13 @@
 }
 
 .userAvatar {
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
   border-radius: var(--r-md);
-  background: linear-gradient(135deg, #4a4d6e, var(--clr-accent));
+  background: var(--grad-brand);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 12px; color: #fff;
+  font-weight: 700; font-size: 13px; color: #FFFFFF;
   flex-shrink: 0;
+  box-shadow: var(--shadow-brand);
 }
 
 .userName {
@@ -195,9 +204,10 @@
 }
 
 .questionBubbleActive {
-  background: var(--clr-accent);
-  border-color: var(--clr-accent);
-  color: #0B0C0E;
+  background: var(--grad-brand);
+  border-color: transparent;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-brand);
 }
 
 @keyframes pulseLive {

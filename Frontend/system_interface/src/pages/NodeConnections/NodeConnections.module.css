@@ -9,13 +9,30 @@
 }
 .navLogo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
 .navLogoIcon {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  border-radius: 10px;
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  background: var(--grad-brand-soft);
+  border: 1px solid var(--clr-border-strong);
   display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
   overflow: hidden;
+  padding: 3px;
+  box-sizing: border-box;
 }
-.navLogoText { font-size: 17px; font-weight: 700; color: var(--clr-text); }
+.navLogoText {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-text);
+  letter-spacing: -0.01em;
+  display: inline-block;
+  height: 24px !important;
+  width: auto !important;
+  max-width: 100px !important;
+  max-height: 24px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 .navActions { display: flex; gap: 12px; }
 .content { max-width: 1300px; margin: 0 auto; padding: 40px 32px; }
 .cardsContainer {

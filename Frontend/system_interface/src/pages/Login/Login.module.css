@@ -1,5 +1,3 @@
-/* Aurora ambient background handled by .aurora-bg + .grain in index.css */
-
 .form {
   display: flex;
   flex-direction: column;
@@ -13,19 +11,23 @@
 
 .showHideBtn {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: var(--clr-text-3);
-  padding: 4px;
-  display: flex;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  padding: 4px 6px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--r-sm);
   transition: var(--tr-fast);
+  border-radius: var(--r-sm);
 }
 .showHideBtn:hover {
   color: var(--clr-text);
