@@ -70,6 +70,10 @@
   --shadow-lg:   0 16px 40px rgba(0,0,0,0.45);
   --shadow-glow: 0 0 24px rgba(123,131,235,0.18);
 
+  /* Header (frosted, themed) */
+  --header-bg: rgba(8,9,10,0.78);
+  --header-shadow: 0 1px 0 var(--clr-border);
+
   /* Transitions */
   --tr-fast:   all 0.15s ease;
   --tr-normal: all 0.25s ease;
@@ -131,8 +135,10 @@ p { line-height: 1.6; }
 /* ── App Layout ─────────────────────────────────────────────────── */
 .app-shell {
   display: flex;
+  flex: 1;
   min-height: 100vh;
   background: var(--clr-bg);
+  width: 100%;
 }
 
 .main-content {
@@ -554,4 +560,152 @@ tr:hover td { background: rgba(255,255,255,0.015); }
   .coding-layout { grid-template-columns: 1fr; }
   .problem-panel { height: 50vh; }
   .editor-panel { height: 50vh; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Light Theme — token overrides applied via [data-theme="light"] on
+   the `.app-themed` wrapper that ProtectedRoute renders around all
+   authenticated pages. Landing/Login/Register are intentionally NOT
+   wrapped, so they keep the dark theme regardless of toggle state.
+   ═══════════════════════════════════════════════════════════════════ */
+.app-themed[data-theme="light"] {
+  /* Background — bright near-white with crisp separation */
+  --clr-bg:       #F4F5F8;
+  --clr-bg-2:     #FFFFFF;
+  --clr-bg-3:     #FFFFFF;
+
+  /* Surfaces — solid white for cards so they pop off the page */
+  --clr-surface:    #FFFFFF;
+  --clr-surface-2:  #FAFBFC;
+
+  /* Hairline borders — dark instead of light */
+  --clr-border:        rgba(15,17,21,0.08);
+  --clr-border-strong: rgba(15,17,21,0.14);
+
+  /* Text — high-contrast near-black */
+  --clr-text:   #0F1115;
+  --clr-text-2: #5B6270;
+  --clr-text-3: #8A8F98;
+
+  /* Accent — same violet, tweaked for light backgrounds */
+  --clr-accent:       #5B63D6;
+  --clr-accent-light: #4F46E5;
+  --clr-accent-hover: #4A52C7;
+  --clr-accent-glow:  rgba(91,99,214,0.16);
+
+  /* Semantic — slightly deeper so they read on white */
+  --clr-success: #2EA88A;
+  --clr-warning: #B8843A;
+  --clr-error:   #C7565F;
+  --clr-info:    #3D8BD9;
+  --clr-error-bg: rgba(199,86,95,0.08);
+
+  /* Aurora — same hues, lower opacity for light surfaces */
+  --aurora-bg:
+    radial-gradient(120% 80% at 80% -10%,
+      rgba(94,106,210,0.14) 0%,
+      rgba(197,108,240,0.08) 30%,
+      rgba(255,138,76,0.05) 55%,
+      transparent 75%);
+
+  /* Shadows — softer dark instead of glowy */
+  --shadow-sm:   0 1px 2px rgba(15,17,21,0.05);
+  --shadow-md:   0 4px 12px rgba(15,17,21,0.07);
+  --shadow-lg:   0 16px 40px rgba(15,17,21,0.10);
+  --shadow-glow: 0 0 24px rgba(91,99,214,0.10);
+
+  /* Header — bright frosted bar on light bg */
+  --header-bg: rgba(255,255,255,0.85);
+  --header-shadow: 0 1px 0 rgba(15,17,21,0.08);
+}
+
+/* ── Light-theme adjustments for global classes (CSS Module classes
+   like .header have hashed names, so they can't be targeted here —
+   they use --header-bg and other tokens instead). ──────────────── */
+.app-themed[data-theme="light"] .auth-card {
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 16px 40px rgba(15,17,21,0.08);
+}
+
+/* Cards & inputs — lift off the page bg with a soft shadow */
+.app-themed[data-theme="light"] .stat-card,
+.app-themed[data-theme="light"] .card,
+.app-themed[data-theme="light"] .actionCard {
+  box-shadow: 0 1px 2px rgba(15,17,21,0.04), 0 1px 3px rgba(15,17,21,0.06);
+}
+
+.app-themed[data-theme="light"] .stat-card:hover,
+.app-themed[data-theme="light"] .card:hover,
+.app-themed[data-theme="light"] .actionCard:hover {
+  box-shadow: 0 4px 12px rgba(15,17,21,0.08);
+}
+
+.app-themed[data-theme="light"] .form-input,
+.app-themed[data-theme="light"] .form-textarea,
+.app-themed[data-theme="light"] .form-select {
+  background: #FFFFFF;
+}
+
+.app-themed[data-theme="light"] .btn-primary {
+  color: #FFFFFF;
+}
+
+.app-themed[data-theme="light"] .btn-success {
+  color: #FFFFFF;
+}
+
+.app-themed[data-theme="light"] .modal-overlay {
+  background: rgba(15,17,21,0.45);
+}
+
+.app-themed[data-theme="light"] .modal-box {
+  box-shadow: 0 16px 40px rgba(15,17,21,0.18);
+}
+
+.app-themed[data-theme="light"] .spinner {
+  border-color: rgba(0,0,0,0.12);
+}
+
+.app-themed[data-theme="light"] .table-wrap { background: var(--clr-surface); }
+.app-themed[data-theme="light"] tr:hover td { background: rgba(0,0,0,0.02); }
+
+.app-themed[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); }
+.app-themed[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.22); }
+
+/* Form-select chevron — must set background-repeat: no-repeat or
+   the SVG tiles across the element (visible bug on light theme). */
+.app-themed[data-theme="light"] .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%235B6270' stroke-width='1.5' d='M3 5l3 3 3-3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.app-themed[data-theme="light"] .grain {
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
+.app-themed[data-theme="light"] .alert-error {
+  color: #B7484F;
+}
+.app-themed[data-theme="light"] .alert-success {
+  color: #2A8E73;
+}
+.app-themed[data-theme="light"] .alert-info {
+  color: #2F73B8;
+}
+.app-themed[data-theme="light"] .alert-warning {
+  color: #9A6E2C;
+}
+
+.app-themed[data-theme="light"] .badge-success  { color: #2A8E73; }
+.app-themed[data-theme="light"] .badge-error    { color: #B7484F; }
+.app-themed[data-theme="light"] .badge-warning  { color: #9A6E2C; }
+.app-themed[data-theme="light"] .badge-info     { color: #2F73B8; }
+
+/* Smooth color/background transition when theme flips */
+html, body, .auth-card, .modal-box, .card,
+.btn, .form-input, .form-textarea, .form-select,
+.table-wrap, .badge, .alert, .spinner {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

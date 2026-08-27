@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   height: var(--topbar-h);
-  background: rgba(8,9,10,0.78);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--clr-border);
@@ -11,6 +11,7 @@
   padding: 0 24px;
   gap: 14px;
   z-index: 50;
+  color: var(--clr-text);
 }
 
 .menuBtn {

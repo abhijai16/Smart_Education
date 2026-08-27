@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerProvider } from './context/ServerContext';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './components/Toast/ToastProvider';
 import AppRoutes from './routes/AppRoutes';
 import './index.css';
@@ -15,19 +16,21 @@ export default function App() {
         // Silently catch errors in case the backend is already shutting down
       });
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
   return (
     <BrowserRouter>
-      <ServerProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <AppRoutes />
-          </ToastProvider>
-        </AuthProvider>
-      </ServerProvider>
+      <ThemeProvider>
+        <ServerProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <AppRoutes />
+            </ToastProvider>
+          </AuthProvider>
+        </ServerProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

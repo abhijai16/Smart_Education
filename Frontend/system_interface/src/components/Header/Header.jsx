@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../common/Icon';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import styles from './Header.module.css';
 
 const Header = ({ title, subtitle, onMenuToggle, actions }) => (
@@ -17,7 +18,10 @@ const Header = ({ title, subtitle, onMenuToggle, actions }) => (
       {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
     </div>
 
-    {actions && <div className={styles.actions}>{actions}</div>}
+    <div className={styles.actions}>
+      <ThemeToggle />
+      {actions}
+    </div>
   </header>
 );
 
