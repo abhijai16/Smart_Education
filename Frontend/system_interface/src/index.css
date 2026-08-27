@@ -131,6 +131,16 @@ body {
   font-feature-settings: 'cv11', 'ss01', 'ss03';
 }
 
+/* Themed wrapper — set color here so children that don't set their own
+   color inherit the *themed* --clr-text, not the body's default. The
+   body sits OUTSIDE .app-themed, so any :root-level override (e.g. the
+   light theme tokens) won't reach body. Without this rule, elements
+   like inline-styled Quick Action labels fall through to the body's
+   white (#FFFFFF) and become invisible against a white card. */
+.app-themed {
+  color: var(--clr-text);
+}
+
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; background: none; border: none; color: inherit; }
 input, textarea, select { font-family: inherit; }

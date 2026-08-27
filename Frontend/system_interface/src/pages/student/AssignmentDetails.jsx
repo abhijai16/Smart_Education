@@ -63,7 +63,7 @@ const AssignmentDetails = () => {
     const cached = sessionStorage.getItem(`language_cache_${id}`);
     return cached || 'python';
   });
-  const [editorTheme, setEditorTheme] = useState('vs-dark');
+  const [editorTheme, setEditorTheme] = useState('vesper');
   const [activeTab, setActiveTab] = useState('description');
 
   const [running, setRunning] = useState(false);
