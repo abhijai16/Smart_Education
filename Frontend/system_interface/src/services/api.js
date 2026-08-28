@@ -295,9 +295,8 @@ const installAuthInterceptors = (client) => {
   return client;
 };
 
-// Centralized_Database server runs on 8001; the node backend runs on 8000.
-const CENTRAL_URL = process.env.REACT_APP_CENTRAL_URL || 'http://localhost:8001';
-const NODE_URL = process.env.REACT_APP_NODE_URL || 'http://localhost:8000';
+const CENTRAL_URL = process.env.REACT_APP_CENTRAL_URL || 'http://localhost:8000';
+const NODE_URL = process.env.REACT_APP_NODE_URL || 'http://localhost:8001';
 
 const createClient = () =>
   installAuthInterceptors(

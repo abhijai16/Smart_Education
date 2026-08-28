@@ -50,19 +50,7 @@ export async function discoverServers(retries = MAX_RETRIES) {
       }
 
       // The Node found the Database via Zeroconf and tells React where it is!
-      let centralURL = `http://${ip}:${port}`;
-
-      // When the browser is on localhost/127.0.0.1, the LAN IP the node
-      // advertises is almost always its own (port 8000), not the central DB
-      // (which lives on 8001 on this machine). Without this override, every
-      // auth/question request routes to the wrong server and returns 404.
-      const isLocalBrowser =
-        typeof window !== 'undefined' &&
-        (window.location.hostname === 'localhost' ||
-          window.location.hostname === '127.0.0.1');
-      if (isLocalBrowser) {
-        centralURL = `http://localhost:${CENTRAL_PORT}`;
-      }
+      const centralURL = `http://${ip}:${port}`;
 
       // 2. FIX: Set the backendURL to the port we booted the node on
       const backendURL = NODE_URL;
