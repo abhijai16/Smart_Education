@@ -50,7 +50,22 @@ export async function discoverServers(retries = MAX_RETRIES) {
       }
 
       // The Node found the Database via Zeroconf and tells React where it is!
-      const centralURL = `http://${ip}:${port}`;
+      // In single-host dev the node advertises its own address as the database
+      // (because there's no separate central DB to discover), but the real
+      // Centralized_Database server lives on a different port (8001) on this
+      // same machine. When the gateway is on this same machine, route auth to
+      // localhost:8001 instead. When the gateway is a different machine, trust
+      // the discovered address.
+      const gatewayIp = data?.gateway?.ip;
+      const browserIsLocal =
+        typeof window !== 'undefined' &&
+        (window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1');
+      const sameHost = browserIsLocal && (ip === gatewayIp || ip === window.location.hostname);
+
+      const centralURL = sameHost
+        ? `http://${window.location.hostname}:${CENTRAL_PORT}`
+        : `http://${ip}:${port}`;
 
       // 2. FIX: Set the backendURL to the port we booted the node on
       const backendURL = NODE_URL;
