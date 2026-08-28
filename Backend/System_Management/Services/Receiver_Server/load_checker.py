@@ -5,14 +5,7 @@ from Services.load_score import (
 from Services.Receiver_Server.runtime import runtime
 
 
-def get_predicted_score(*args, **kwargs) -> float:
-    """
-    Return the predicted load score for the current node.
-
-    Accepts and ignores any positional/keyword arguments for backwards
-    compatibility with older call sites that pass `receiver_runtime`
-    explicitly. The function uses the module-level runtime singleton.
-    """
+def get_predicted_score() -> float:
 
     from Services.Receiver_Server.runtime import runtime
 

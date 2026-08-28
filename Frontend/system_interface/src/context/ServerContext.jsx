@@ -52,7 +52,7 @@ function DiscoveryLoadingScreen({ message }) {
             marginBottom: 8,
           }}
         >
-          Connecting to Quorum
+          Connecting to ProctorX
         </h2>
         <p
           style={{

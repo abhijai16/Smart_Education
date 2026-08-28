@@ -39,10 +39,15 @@ const NodeConnections = () => {
       {/* Navbar */}
       <nav className={styles.navbar}>
         <div className={styles.navLogo} onClick={() => navigate('/')}>
+<<<<<<< HEAD
           <div className={styles.navLogoIcon}>
             <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <span className={styles.navLogoText}>Quorum</span>
+=======
+          <div className={styles.navLogoIcon}>⚡</div>
+          <span className={styles.navLogoText}>ProctorX</span>
+>>>>>>> parent of f9be813 (Changed the name to Quorum, Changed the Generative-ai to Gen-ai, Repolished the test cases, Hardened the sandbox.)
         </div>
         <div className={styles.navActions}>
           <button className="btn btn-ghost btn-sm" onClick={() => navigate('/')}>

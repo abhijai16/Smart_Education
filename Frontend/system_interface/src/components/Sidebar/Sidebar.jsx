@@ -97,7 +97,7 @@ const Sidebar = ({ role, isOpen, onClose }) => {
             <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
-            <div className={styles.brandName}>Quorum</div>
+            <div className={styles.brandName}>ProctorX</div>
             <div className={styles.brandSub}>Eval Platform</div>
           </div>
         </div>

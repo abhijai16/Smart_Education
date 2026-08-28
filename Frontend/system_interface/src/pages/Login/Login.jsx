@@ -69,7 +69,7 @@ const Login = () => {
           <img src="/logo192.png" alt="Quorum logo" style={{ width: 56, height: 56, objectFit: 'contain' }} />
         </div>
         <h1 className="auth-title">Sign In</h1>
-        <p className="auth-sub">Welcome back to Quorum</p>
+        <p className="auth-sub">Welcome back to CodeMesh</p>
 
         {/* Error */}
         {error && (

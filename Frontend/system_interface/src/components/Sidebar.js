@@ -75,8 +75,8 @@ export default function Sidebar() {
           <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
         <div>
-          <div className="sidebar-brand-name">Quorum</div>
-          <div className="sidebar-brand-sub">Quorum</div>
+          <div className="sidebar-brand-name">CodeLab</div>
+          <div className="sidebar-brand-sub">ProctorX</div>
         </div>
       </div>
 

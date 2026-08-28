@@ -38,7 +38,7 @@ export default function LoginPage() {
           <img src="/logo192.png" alt="Quorum logo" style={{ width: 56, height: 56, objectFit: 'contain' }} />
         </div>
         <h1 className="auth-title">Welcome back</h1>
-        <p className="auth-sub">Sign in to Quorum</p>
+        <p className="auth-sub">Sign in to ProctorX</p>
 
         {error && <div className="alert alert-error">{error}</div>}
 

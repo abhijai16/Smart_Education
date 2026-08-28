@@ -83,7 +83,7 @@ const StartExam = () => {
           <h3 className={styles.rulesTitle}>⚠️ Test Rules</h3>
           <ul className={styles.rulesList}>
             <li>Internet access will be <strong>disabled</strong> during the test.</li>
-            <li>Only Quorum will remain accessible.</li>
+            <li>Only ProctorX will remain accessible.</li>
             <li>Do <strong>not</strong> close or minimize the browser.</li>
             <li>Your timer starts as soon as you click "Start Test".</li>
             <li>Submit your answers before the timer runs out.</li>
