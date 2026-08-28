@@ -42,7 +42,7 @@ const NodeConnections = () => {
           <div className={styles.navLogoIcon}>
             <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
-          <img src="/logo.png" alt="Quorum" className={styles.navLogoText} />
+          <span className={styles.navLogoText}>Quorum</span>
         </div>
         <div className={styles.navActions}>
           <button className="btn btn-ghost btn-sm" onClick={() => navigate('/')}>

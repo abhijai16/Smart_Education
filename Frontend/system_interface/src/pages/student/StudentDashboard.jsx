@@ -107,8 +107,8 @@ const StudentDashboard = () => {
           {/* Quick Actions */}
           <div className={styles.quickActions}>
             {examActive ? (
-               <div className={styles.actionCard} style={{ background: 'rgba(5,64,245,0.1)', border: '1px solid var(--clr-primary)' }} onClick={() => navigate('/student/tests')} role="button" tabIndex={0}>
-                 <div className={styles.actionIcon} style={{ background: 'rgba(5,64,245,0.2)' }}>⚡</div>
+               <div className={styles.actionCard} style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid var(--clr-primary)' }} onClick={() => navigate('/student/tests')} role="button" tabIndex={0}>
+                 <div className={styles.actionIcon} style={{ background: 'rgba(99,102,241,0.2)' }}>⚡</div>
                  <div>
                    <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--clr-primary)' }}>Continue Test</div>
                    <div style={{ fontSize: 13, color: 'var(--clr-text-2)' }}>Your test is currently active. Click here to return.</div>
@@ -143,7 +143,7 @@ const StudentDashboard = () => {
             </div>
 
             <div className={styles.actionCard} onClick={() => setIsPasswordModalOpen(true)} role="button" tabIndex={0}>
-              <div className={styles.actionIcon} style={{ background: 'rgba(5,64,245,0.15)' }}>🔑</div>
+              <div className={styles.actionIcon} style={{ background: 'rgba(99,102,241,0.15)' }}>🔑</div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 15 }}>Change Password</div>
                 <div style={{ fontSize: 13, color: 'var(--clr-text-2)' }}>Update your account password</div>

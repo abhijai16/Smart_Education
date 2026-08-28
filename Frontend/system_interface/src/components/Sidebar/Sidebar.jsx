@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import { getTestById, getAllTests } from '../../services/testService';
 import Icon from '../common/Icon';
 import styles from './Sidebar.module.css';
@@ -28,9 +27,7 @@ const STUDENT_NAV = [
 
 const Sidebar = ({ role, isOpen, onClose }) => {
   const { user, logout } = useAuth();
-  const { theme } = useTheme();
   const navigate = useNavigate();
-  const wordmarkSrc = theme === 'light' ? '/logo-light.png' : '/logo.png';
 
   const navItems = role === 'teacher' ? TEACHER_NAV : STUDENT_NAV;
   const examActive = localStorage.getItem('exam_active') === 'true';
@@ -100,7 +97,8 @@ const Sidebar = ({ role, isOpen, onClose }) => {
             <img src="/logo192.png" alt="Quorum logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
-            <img src={wordmarkSrc} alt="Quorum" className={styles.brandName} />
+            <div className={styles.brandName}>Quorum</div>
+            <div className={styles.brandSub}>Eval Platform</div>
           </div>
         </div>
 

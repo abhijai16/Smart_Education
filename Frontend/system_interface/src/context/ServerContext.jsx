@@ -35,7 +35,7 @@ function DiscoveryLoadingScreen({ message }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 0 30px rgba(91,180,255,0.4)',
+          boxShadow: '0 0 30px rgba(99,102,241,0.4)',
           animation: 'pulse-glow 2s ease-in-out infinite',
           overflow: 'hidden',
         }}
@@ -74,8 +74,8 @@ function DiscoveryLoadingScreen({ message }) {
 
       <style>{`
         @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(91,180,255,0.3); }
-          50%       { box-shadow: 0 0 40px rgba(91,180,255,0.6); }
+          0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); }
+          50%       { box-shadow: 0 0 40px rgba(99,102,241,0.6); }
         }
       `}</style>
     </div>
