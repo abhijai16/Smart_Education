@@ -202,36 +202,12 @@ export const ServerProvider = ({ children }) => {
       setStatusMessage('Fetching node information…');
       const result = await discoverServers();
 
-      // When the frontend is served from localhost/127.0.0.1 but the
-      // discovered URLs point at a LAN IP, rewrite them to localhost.
-      // The LAN IP often isn't reachable from the same machine (firewall
-      // / NAT) even though the services listen on 127.0.0.1 — this would
-      // make every API request hang until the 30s axios timeout fires.
-      const isLocalBrowser =
-        typeof window !== 'undefined' &&
-        (window.location.hostname === 'localhost' ||
-          window.location.hostname === '127.0.0.1');
-
-      const rewriteToLocalhost = (url) => {
-        if (!isLocalBrowser) return url;
-        try {
-          const u = new URL(url);
-          u.hostname = 'localhost';
-          return u.toString();
-        } catch (_) {
-          return url;
-        }
-      };
-
-      const safeCentralURL = rewriteToLocalhost(result.centralURL);
-      const safeBackendURL = rewriteToLocalhost(result.backendURL);
-
-      runtimeConfig.setCentralURL(safeCentralURL);
-      runtimeConfig.setBackendURL(safeBackendURL);
+      runtimeConfig.setCentralURL(result.centralURL);
+      runtimeConfig.setBackendURL(result.backendURL);
       runtimeConfig.setInitialized(true);
 
-      setCentralURL(safeCentralURL);
-      setBackendURL(safeBackendURL);
+      setCentralURL(result.centralURL);
+      setBackendURL(result.backendURL);
       setNodeInfo(result.nodeInfo);
       setStatusMessage('Connected!');
     } catch (err) {
